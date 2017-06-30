@@ -32,7 +32,7 @@
 - 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令 `git reset HEAD <file>` ，就回到了第一种情况，第二步安装第一种情况操作。
 - 已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
 
-##### 删除文件
+#####  删除文件
 
 - 通过 `rm <file>` 删除工作区的文件。可以通过 `git status` 命令来查看什么文件被删除了。
 - 确实是要删除版本库中该文件，用命令 `git rm <file>` 删掉，并且 `git commit` 。
@@ -79,6 +79,17 @@ Git支持多种协议，包括 `https` ，但通过 `ssh` 支持原生 `git` 协
 ##### 解决冲突
 
 查看分支合并图：`git log --graph` 
+
+##### 分支管理策略
+
+合并 `dev` 分支，注意使用 `--no-ff` 参数，表示禁用 `Fast forward` ，不会丢失分支信息：
+
+```
+$ git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt |    1 +
+ 1 file changed, 1 insertion(+)
+```
 
 
 
