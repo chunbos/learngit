@@ -32,7 +32,7 @@
 - 当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令 `git reset HEAD <file>` ，就回到了第一种情况，第二步安装第一种情况操作。
 - 已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退一节，不过前提是没有推送到远程库。
 
-##### 删除文件
+#####  删除文件
 
 - 通过 `rm <file>` 删除工作区的文件。可以通过 `git status` 命令来查看什么文件被删除了。
 - 确实是要删除版本库中该文件，用命令 `git rm <file>` 删掉，并且 `git commit` 。
@@ -79,6 +79,49 @@ Git支持多种协议，包括 `https` ，但通过 `ssh` 支持原生 `git` 协
 ##### 解决冲突
 
 查看分支合并图：`git log --graph` 
+
+##### 分支管理策略
+
+合并 `dev` 分支，注意使用 `--no-ff` 参数，表示禁用 `Fast forward` ，不会丢失分支信息：
+
+```
+$ git merge --no-ff -m "merge with no-ff" dev
+Merge made by the 'recursive' strategy.
+ readme.txt |    1 +
+ 1 file changed, 1 insertion(+)
+```
+
+- 分支策略
+
+在实际开发中，我们应该按照几个基本原则进行分支管理：
+
+首先，`master`分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
+
+那在哪干活呢？干活都在`dev`分支上，也就是说，`dev`分支是不稳定的，到某个时候，比如1.0版本发布时，再把`dev`分支合并到`master`上，在`master`分支发布1.0版本；
+
+你和你的小伙伴们每个人都在`dev`分支上干活，每个人都有自己的分支，时不时地往`dev`分支上合并就可以了。
+
+所以，团队合作的分支看起来就像这样：
+
+![](http://www.liaoxuefeng.com/files/attachments/001384909239390d355eb07d9d64305b6322aaf4edac1e3000/0)
+
+##### Bug分支
+
+##### 多人协作
+
+- 首先试图用 `git push origin branch-name` 来推送自己的修改
+- 如果推送失败，则是因为远程分支比你的本地版本更新，需要先用 `git pull` 试图合并；
+- 如果合并有冲突，那就需要解决冲突，并在本地提交；
+- 没有冲突或者解决冲突后，再用 `git push origin branch-name` 推送即可。
+
+如果 `git pull` 提示"no tracking information"，则说明本地分支和远程分支的链接关系没有创建，用命令 `git branch --set-upstream branch-name origin/branch-name` 这就是多人协作模式。
+
+- 查看远程库信息，使用 `git remove -v` ；
+- 本地新建分支如果没有推送远程，那么对其他人就是不可见的。
+- 从本地推送分支，使用 `git push origin branch-name` ，如果推送失败，先用 `git pull` 抓取远程的新提交；
+- 在本地创建和远程分支对应的分支，使用 `git checkout -b branch-name origin/branch-name` ，本地和远程分支的名称最好一致；
+- 建立本地分支和远程分支的链接，使用命令 `git branch --set-upstream branch-name origin/branch-name` ；
+- 从远程抓取分支，使用 `git pull` ，如果有冲突，要先要先处理冲突。
 
 
 
