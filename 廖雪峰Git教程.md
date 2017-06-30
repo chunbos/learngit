@@ -81,9 +81,6 @@ Git支持多种协议，包括 `https` ，但通过 `ssh` 支持原生 `git` 协
 查看分支合并图：`git log --graph` 
 
 ##### 分支管理策略
-<<<<<<< HEAD
-=======
-
 合并 `dev` 分支，注意使用 `--no-ff` 参数，表示禁用 `Fast forward` ，不会丢失分支信息：
 
 ```
@@ -124,28 +121,3 @@ Merge made by the 'recursive' strategy.
 - 在本地创建和远程分支对应的分支，使用 `git checkout -b branch-name origin/branch-name` ，本地和远程分支的名称最好一致；
 - 建立本地分支和远程分支的链接，使用命令 `git branch --set-upstream branch-name origin/branch-name` ；
 - 从远程抓取分支，使用 `git pull` ，如果有冲突，要先要先处理冲突。
-
->>>>>>> dev
-
-合并 `dev` 分支，注意使用 `--no-ff` 参数，表示禁用 `Fast forward` ，不会丢失分支信息：
-
-```
-$ git merge --no-ff -m "merge with no-ff" dev
-Merge made by the 'recursive' strategy.
- readme.txt |    1 +
- 1 file changed, 1 insertion(+)
-```
-
-- 分支策略
-
-在实际开发中，我们应该按照几个基本原则进行分支管理：
-
-首先，`master`分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；
-
-那在哪干活呢？干活都在`dev`分支上，也就是说，`dev`分支是不稳定的，到某个时候，比如1.0版本发布时，再把`dev`分支合并到`master`上，在`master`分支发布1.0版本；
-
-你和你的小伙伴们每个人都在`dev`分支上干活，每个人都有自己的分支，时不时地往`dev`分支上合并就可以了。
-
-所以，团队合作的分支看起来就像这样：
-
-![](http://www.liaoxuefeng.com/files/attachments/001384909239390d355eb07d9d64305b6322aaf4edac1e3000/0)
