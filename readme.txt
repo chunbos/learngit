@@ -5,3 +5,4 @@ Git has a mutable index called stage.
 Git tracks changes of files.
 test0 分支管理策略
 test1 Bug分支
+多人协作
